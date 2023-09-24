@@ -34,3 +34,7 @@ product.css('div.product-item-meta a').attrib['href']
 
 save as json or csv
 scrapy crawl chocolatespider -O choco.json
+
+pip install botocore
+
+pip install scrapy-user-agents
