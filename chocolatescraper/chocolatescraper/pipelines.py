@@ -44,38 +44,3 @@ class DuplicatesPipeline:
             self.names_seen.add(adapter['name'])
             return item
         
-
-import psycopg2
-
-class SavingToPostgresPipeline(object):
-
-    def __init__(self):
-        self.create_connection()
-
-
-    def create_connection(self):
-        self.conn = psycopg2.connect(
-            # DATABASE_URL = "postgresql://postgres:YbBYHfK4So4dojs7nylI@containers-us-west-181.railway.app:5561/railway",
-            dbname="railway",
-            host="containers-us-west-181.railway.app",
-            password="YbBYHfK4So4dojs7nylI",
-            port="5561",
-            user="postgres"
-            )
-
-        self.cure = self.conn.cursor()
-
-
-    def process_item(self, item, spider):
-        self.store_db(item)
-        #we need to return the item below as scrapy expects us to!
-        return item
-
-    def store_in_db(self, item):
-        self.curr.execute(""" insert into chocolate_products values (%s,%s,%s)""", (
-            item["title"][0],
-            item["price"][0],
-            item["url"][0]
-        ))
-        self.conn.commit()
-
